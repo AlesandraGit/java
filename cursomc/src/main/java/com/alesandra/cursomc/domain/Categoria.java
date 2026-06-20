@@ -1,11 +1,10 @@
 package com.alesandra.cursomc.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -19,9 +18,25 @@ public class Categoria implements Serializable {
     private Integer id;
     private String nome;
 
+
+    //Tem  um relacionamento entre Categoria e Produto de muito para muitos
+    //Já foi feito na entidade produto a criação desta tabela de relacionamento
+    //Aqui será referenciadas a a lista categorias que esta la na entidade de produto
+    @ManyToMany(mappedBy = "categorias")
+    private List<Produto> produtos = new ArrayList<>();
+
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
+    }
+
     public  Categoria(){
 
     }
+
 
     public Categoria(Integer id, String nome) {
         super();
