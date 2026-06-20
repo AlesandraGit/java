@@ -1,16 +1,28 @@
 package com.alesandra.cursomc.resources;
 
 import com.alesandra.cursomc.domain.Categoria;
+import com.alesandra.cursomc.repositories.CategoriaRepository;
+import com.alesandra.cursomc.services.CategoriaService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value="/categorias")
 public class CategoriaResource {
+
+    @Autowired
+    private CategoriaService service;
+
+
 
     @RequestMapping(value="/teste",method = RequestMethod.GET)
     public String Teste(){
@@ -27,5 +39,11 @@ public class CategoriaResource {
         lista.add(cat2);
 
         return lista;
+    }
+
+    @RequestMapping(value = "/find/{id}", method = RequestMethod.GET)
+    public ResponseEntity<Categoria> find(@PathVariable Integer id) {
+        Categoria obj = service.find(id);
+        return ResponseEntity.ok().body(obj);
     }
 }
